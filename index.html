@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Go Cage Free — Pressione a Unilever</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+
+<style>
+/* ─── RESET & BASE ─── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --black:   #0a0a0a;
+  --white:   #ffffff;
+  --yellow:  #FFD700;
+  --orange:  #FF6B00;
+  --muted:   #666666;
+  --light:   #f5f5f5;
+  --font:    'Inter', sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font);
+  color: var(--black);
+  background: var(--white);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── NAV ─── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 3rem;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+  color: var(--black);
+}
+
+.nav-brand img {
+  height: 28px;
+  width: auto;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+}
+
+.nav-links a {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover { color: var(--black); }
+
+/* ─── SECTION BASE ─── */
+section { width: 100%; }
+
+/* ─── SECTION 1: HERO ─── */
+#hero {
+  min-height: 100vh;
+  padding: 7rem 3rem 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--white);
+  text-align: center;
+}
+
+.hero-eyebrow {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 1.5rem;
+}
+
+.hero-title {
+  font-size: clamp(2.5rem, 6vw, 5.5rem);
+  font-weight: 900;
+  line-height: 1.0;
+  letter-spacing: -0.04em;
+  color: var(--black);
+  max-width: 900px;
+  margin-bottom: 1.5rem;
+}
+
+.hero-title em {
+  font-style: normal;
+  color: var(--orange);
+}
+
+.hero-sub {
+  font-size: clamp(1rem, 1.8vw, 1.25rem);
+  font-weight: 400;
+  color: var(--muted);
+  max-width: 520px;
+  line-height: 1.6;
+  margin-bottom: 3rem;
+}
+
+/* ─── UNIFIED WIDGET + COUNTER MODULE ─── */
+#widget-area {
+  width: 100%;
+  max-width: 960px;
+  background: #060f1c;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.07), 0 40px 100px rgba(0,0,0,0.5);
+}
+
+/* ── STADIUM GAME FIELD ── */
+#game-field {
+  position: relative;
+  height: 420px;
+  background: linear-gradient(180deg, #081524 0%, #0c1f38 55%, #0a1a2c 100%);
+  overflow: hidden;
+}
+
+#game-field::before {
+  content: '';
+  position: absolute;
+  top: -120px; left: 50%;
+  transform: translateX(-50%);
+  width: 120%; height: 480px;
+  background: radial-gradient(ellipse at 50% 0%, rgba(60,110,220,0.22) 0%, transparent 65%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── GRASS ── */
+#grass {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 11%;
+  background: repeating-linear-gradient(
+    90deg,
+    #1a4d0f 0px, #1a4d0f 60px,
+    #1e5812 60px, #1e5812 120px
+  );
+  border-top: 2px solid rgba(255,255,255,0.12);
+  z-index: 1;
+}
+
+/* ── COUNTER BAR ── */
+#counter-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  padding: 1.25rem 2.5rem;
+  background: #060f1c;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  flex-wrap: wrap;
+}
+
+.cbar-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.3);
+}
+
+.cbar-number {
+  font-size: clamp(1.6rem, 4vw, 2.75rem);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  color: var(--yellow);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.cbar-suffix {
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: rgba(255,255,255,0.28);
+  letter-spacing: 0.05em;
+}
+
+/* ── INSTRUCTION ── */
+#instruction {
+  position: absolute;
+  left: 7%;
+  top: 38%;
+  font-family: var(--font);
+  font-size: clamp(12px, 1.5vw, 16px);
+  font-weight: 700;
+  line-height: 1.5;
+  color: rgba(255,255,255,0.65);
+  transition: opacity 0.4s;
+  pointer-events: none;
+  z-index: 5;
+  letter-spacing: 0.02em;
+}
+
+#instruction .brand { color: var(--yellow); }
+
+/* ── ARROW ── */
+#arrow {
+  position: absolute;
+  left: calc(7% + 36px);
+  top: 52%;
+  font-size: 20px;
+  color: var(--yellow);
+  animation: bounce 0.9s ease-in-out infinite;
+  transition: opacity 0.4s;
+  pointer-events: none;
+  z-index: 5;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(8px); }
+}
+
+/* ── BALL ── */
+#ball {
+  position: absolute;
+  left: 7%;
+  bottom: 11%;
+  font-size: clamp(56px, 6.5vw, 82px);
+  line-height: 1;
+  cursor: pointer;
+  user-select: none;
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.8));
+  transition: filter 0.2s;
+  transform-origin: center center;
+  z-index: 10;
+}
+
+#ball:hover {
+  filter: drop-shadow(0 6px 24px rgba(255,200,0,0.7)) drop-shadow(0 0 8px rgba(255,200,0,0.3));
+  animation: pulse 0.6s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(1.07); }
+}
+
+/* ── UNILEVER TARGET ── */
+#target {
+  position: absolute;
+  right: 9%;
+  top: 28%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  transition: opacity 0.3s;
+  z-index: 6;
+}
+
+#target img {
+  width: clamp(100px, 12vw, 160px);
+  filter: brightness(0) invert(1) opacity(0.85);
+}
+
+/* ── IMPACT ── */
+#impact {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  display: none;
+  pointer-events: none;
+  z-index: 30;
+  transform-origin: center center;
+}
+
+#impact.show {
+  display: block;
+  animation: impact-pop 0.3s cubic-bezier(0.17, 0.89, 0.32, 1.28) forwards;
+}
+
+@keyframes impact-pop {
+  0%   { transform: scale(0) rotate(-20deg); opacity: 0; }
+  65%  { transform: scale(1.2) rotate(6deg);  opacity: 1; }
+  100% { transform: scale(1)   rotate(0deg);  opacity: 1; }
+}
+
+.fade-out { opacity: 0 !important; pointer-events: none; }
+
+/* ─── SECTION 3: CAMPAIGN INFO ─── */
+#info {
+  background: var(--white);
+  padding: 4rem 3rem;
+}
+
+.info-inner {
+  max-width: 1080px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: start;
+}
+
+.info-heading {
+  font-size: clamp(1.75rem, 3.5vw, 3rem);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  color: var(--black);
+  position: sticky;
+  top: 7rem;
+}
+
+.info-heading em {
+  font-style: normal;
+  color: var(--orange);
+}
+
+.info-body { display: flex; flex-direction: column; gap: 1rem; }
+
+.info-body p {
+  font-size: 1rem;
+  line-height: 1.65;
+  color: #333;
+}
+
+.info-pull {
+  border-left: 3px solid var(--yellow);
+  padding-left: 1.25rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--black);
+  line-height: 1.5;
+}
+
+.info-tag {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--orange);
+  border: 1.5px solid var(--orange);
+  padding: 0.35rem 0.8rem;
+  border-radius: 100px;
+  margin-bottom: 1rem;
+}
+
+/* ─── SECTION 4: CHATBOT ─── */
+#chatbot {
+  background: var(--black);
+  padding: 4rem 3rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+#chatbot::before {
+  content: '';
+  position: absolute;
+  top: -200px; left: 50%;
+  transform: translateX(-50%);
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(255,215,0,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.chatbot-eyebrow {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--yellow);
+  margin-bottom: 0.75rem;
+}
+
+.chatbot-title {
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  color: var(--white);
+  line-height: 1.1;
+  max-width: 600px;
+  margin: 0 auto 1rem;
+}
+
+.chatbot-sub {
+  font-size: 1rem;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 2rem;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+}
+
+.chatbot-cta-link {
+  display: inline-block;
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--yellow);
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  margin-bottom: 2rem;
+  transition: opacity 0.2s, letter-spacing 0.2s;
+}
+
+.chatbot-cta-link:hover {
+  opacity: 0.75;
+  letter-spacing: 0.06em;
+}
+
+/* ─── SECTION 5: NEWSLETTER ─── */
+#newsletter {
+  background: var(--light);
+  padding: 4rem 3rem;
+  text-align: center;
+}
+
+.nl-eyebrow {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.5rem;
+}
+
+.nl-title {
+  font-size: clamp(1.4rem, 2.5vw, 2rem);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  color: var(--black);
+  margin-bottom: 0.5rem;
+}
+
+.nl-sub {
+  font-size: 1rem;
+  color: var(--muted);
+  margin-bottom: 1.75rem;
+  line-height: 1.6;
+}
+
+.nl-form {
+  display: flex;
+  gap: 0.75rem;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.nl-input {
+  flex: 1;
+  padding: 0.9rem 1.25rem;
+  font-size: 1rem;
+  font-family: var(--font);
+  border: 1.5px solid rgba(0,0,0,0.15);
+  border-radius: 10px;
+  background: var(--white);
+  color: var(--black);
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.nl-input:focus { border-color: var(--black); }
+.nl-input::placeholder { color: #aaa; }
+
+.nl-btn {
+  padding: 0.9rem 1.75rem;
+  font-size: 1rem;
+  font-weight: 700;
+  font-family: var(--font);
+  background: var(--black);
+  color: var(--white);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+  white-space: nowrap;
+}
+
+.nl-btn:hover { background: #222; }
+.nl-btn:active { transform: scale(0.97); }
+
+.nl-note {
+  font-size: 0.8125rem;
+  color: #aaa;
+  margin-top: 1rem;
+}
+
+/* ─── FOOTER ─── */
+footer {
+  background: var(--black);
+  padding: 2.5rem 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+.footer-brand {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--white);
+}
+
+.footer-brand span { color: var(--white); }
+
+.footer-links {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+}
+
+.footer-links a {
+  font-size: 0.8125rem;
+  color: rgba(255,255,255,0.4);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-links a:hover { color: rgba(255,255,255,0.8); }
+
+.footer-copy {
+  font-size: 0.8125rem;
+  color: rgba(255,255,255,0.25);
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 768px) {
+  nav { padding: 1rem 1.5rem; }
+  .nav-links { display: none; }
+
+  #hero { padding: 6rem 1.5rem 2rem; }
+
+  .info-inner {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .info-heading { position: static; font-size: 2rem; }
+
+  #info, #chatbot, #newsletter { padding: 3rem 1.5rem; }
+
+  .nl-form { flex-direction: column; }
+
+  footer {
+    flex-direction: column;
+    gap: 1.5rem;
+    text-align: center;
+    padding: 2rem 1.5rem;
+  }
+
+  .footer-links { justify-content: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- ─── NAV ─── -->
+<nav>
+  <a class="nav-brand" href="#">
+    <img src="sinergia-animal-logo.png" alt="Sinergia Animal" style="height:36px;width:auto;">
+  </a>
+  <ul class="nav-links">
+    <li><a href="#info">A Campanha</a></li>
+    <li><a href="#chatbot">Aja Agora</a></li>
+    <li><a href="#newsletter">Fique por Dentro</a></li>
+  </ul>
+</nav>
+
+<!-- ─── SECTION 1: HERO + FOOTBALL WIDGET ─── -->
+<section id="hero">
+  <p class="hero-eyebrow">Campanha Global Cage-Free</p>
+  <h1 class="hero-title">A Copa do Mundo Unilever:<br><em>Manipulada por Design</em></h1>
+  <p class="hero-sub">A Unilever prometeu um mundo livre de gaiolas — depois excluiu silenciosamente o Sul Global. Hora de enviar uma mensagem.</p>
+
+  <div id="widget-area">
+    <div id="game-field">
+      <div id="grass"></div>
+
+      <div id="instruction">
+        Clique no ⚽ para enviar<br>
+        uma mensagem à <span class="brand">Unilever</span>!
+      </div>
+
+      <div id="arrow">↓</div>
+
+      <div id="ball" onclick="kickBall()" title="Clique para chutar!" role="button" aria-label="Chute a bola na Unilever">⚽</div>
+
+      <div id="target">
+        <img
+          src="https://static.wixstatic.com/media/ed671b_9a85bb9d7556457f813dc181c0d800c5~mv2.png"
+          alt="Logo Unilever"
+          style="width:clamp(90px,10vw,130px);filter:brightness(0) invert(1);"
+        >
+      </div>
+
+      <div id="impact">
+        <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+          <polygon points="114,60 60,65 60,55"   fill="#FF6B00"/>
+          <polygon points="95,74 59,64 62,56"    fill="#FFD700"/>
+          <polygon points="97,97 57,64 64,57"    fill="#FF6B00"/>
+          <polygon points="76,99 56,62 64,58"    fill="#FFD700"/>
+          <polygon points="60,116 55,60 65,60"   fill="#FF6B00"/>
+          <polygon points="46,93 56,58 64,62"    fill="#FFD700"/>
+          <polygon points="25,95 57,57 64,64"    fill="#FF6B00"/>
+          <polygon points="23,75 59,56 62,64"    fill="#FFD700"/>
+          <polygon points="6,60 60,55 60,65"     fill="#FF6B00"/>
+          <polygon points="25,46 62,56 59,64"    fill="#FFD700"/>
+          <polygon points="23,23 64,57 57,64"    fill="#FF6B00"/>
+          <polygon points="43,19 64,59 56,62"    fill="#FFD700"/>
+          <polygon points="60,6 65,60 55,60"     fill="#FF6B00"/>
+          <polygon points="75,23 64,62 56,59"    fill="#FFD700"/>
+          <polygon points="97,23 64,64 57,57"    fill="#FF6B00"/>
+          <polygon points="95,46 62,64 59,56"    fill="#FFD700"/>
+          <polygon points="88,65 59,63 61,57"    fill="#FFD700"/>
+          <polygon points="77,85 58,62 63,58"    fill="#FF6B00"/>
+          <polygon points="55,88 57,59 63,61"    fill="#FFD700"/>
+          <polygon points="34,78 58,58 62,63"    fill="#FF6B00"/>
+          <polygon points="33,55 61,57 59,63"    fill="#FFD700"/>
+          <polygon points="43,35 63,58 58,62"    fill="#FF6B00"/>
+          <polygon points="65,33 63,61 57,59"    fill="#FFD700"/>
+          <polygon points="87,42 62,63 58,58"    fill="#FF6B00"/>
+          <circle cx="60" cy="60" r="8" fill="#a83200"/>
+        </svg>
+      </div>
+    </div><!-- /game-field -->
+
+    <div id="counter-bar">
+      <span class="cbar-label">Total de golpes</span>
+      <span class="cbar-number" id="counterDisplay">—</span>
+      <span class="cbar-suffix">vezes que a Unilever foi atingida</span>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SECTION 3: CAMPAIGN INFO ─── -->
+<section id="info">
+  <div class="info-inner">
+    <div>
+      <span class="info-tag">A Campanha</span>
+      <h2 class="info-heading">A Unilever quebrou sua<br>promessa com <em>o mundo</em></h2>
+    </div>
+    <div class="info-body">
+      <p class="info-pull">Bilhões de galinhas no Sul Global ainda sofrem em gaiolas em bateria. A Unilever escolheu esquecê-las.</p>
+      <p>A Unilever anunciou uma política global de fornecimento de ovos livres de gaiola. Recentemente, decidiram excluir os "mercados emergentes" de sua política. Eles excluíram o Sul Global — as regiões onde vive a grande maioria das galinhas enjauladas.</p>
+      <p>A Sinergia Animal é uma das principais organizações de proteção animal na América Latina e no Sudeste Asiático. Junto com outras organizações, estamos conduzindo uma campanha sustentada para pressionar a Unilever a fechar essa brecha e cumprir um compromisso cage-free verdadeiramente global — que inclua todos os países em que opera.</p>
+      <p>Cada clique acima, cada mensagem ao nosso bot, cada assinatura envia um sinal real aos tomadores de decisão da Unilever. Junte-se a milhares de pessoas que já estão agindo.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SECTION 4: CHATBOT ─── -->
+<section id="chatbot">
+  <p class="chatbot-eyebrow">Aja Agora</p>
+  <h2 class="chatbot-title">Você tem um minuto para fazer mais pelos animais?</h2>
+  <p class="chatbot-sub">Nosso bot de ação está pronto. Escreva em qualquer idioma — ele vai guiá-lo por uma ação poderosa que leva menos de 2 minutos.</p>
+  <div class="chatbot-cta-link" onclick="if(window.botpress) window.botpress.open()">
+    Me escreva em qualquer idioma! &nbsp;→
+  </div>
+</section>
+
+<!-- ─── SECTION 5: NEWSLETTER ─── -->
+<section id="newsletter">
+  <p class="nl-eyebrow">Fique por Dentro</p>
+  <h2 class="nl-title">Junte-se ao nosso newsletter</h2>
+  <p class="nl-sub">Receba atualizações da campanha, vitórias e formas de agir — direto na sua caixa de entrada.</p>
+  <form class="nl-form" onsubmit="handleSubscribe(event)">
+    <input
+      class="nl-input"
+      type="email"
+      placeholder="seu@email.com"
+      required
+      aria-label="Endereço de e-mail"
+      id="emailInput"
+    >
+    <button class="nl-btn" type="submit">Inscrever-se</button>
+  </form>
+  <p class="nl-note" id="nl-msg">Sem spam. Cancele quando quiser.</p>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="footer-brand">Sinergia<span>Animal</span> International</div>
+  <ul class="footer-links">
+    <li><a href="https://www.sinergiaanimalinternational.org/" target="_blank">Nosso Site</a></li>
+    <li><a href="#info">Campanha</a></li>
+    <li><a href="#newsletter">Newsletter</a></li>
+  </ul>
+  <p class="footer-copy">© 2026 Sinergia Animal</p>
+</footer>
+
+<!-- ─── PROACTIVE CHAT BUBBLE ─── -->
+<div id="proactive-bubble" onclick="openBot()" style="display:none;position:fixed;bottom:88px;right:20px;z-index:9999;flex-direction:column;align-items:flex-end;gap:6px;cursor:pointer;">
+  <div style="background:#fff;color:#0a0a0a;font-family:'Inter',sans-serif;font-size:0.9rem;font-weight:600;line-height:1.4;padding:12px 16px;border-radius:16px 16px 4px 16px;box-shadow:0 4px 24px rgba(0,0,0,0.15);max-width:220px;position:relative;">
+    Tem um minuto para agir? Converse comigo! 🐔
+    <button onclick="event.stopPropagation();dismissBubble()" style="position:absolute;top:6px;right:8px;background:none;border:none;font-size:14px;color:#999;cursor:pointer;line-height:1;padding:0;">×</button>
+  </div>
+  <div style="width:10px;height:10px;background:#fff;clip-path:polygon(0 0,100% 0,100% 100%);margin-right:28px;box-shadow:2px 2px 4px rgba(0,0,0,0.08);"></div>
+</div>
+
+<!-- ─── SCRIPTS ─── -->
+<script>
+/* ── COUNTER (Upstash Redis) — shared counter ── */
+const UPSTASH_URL   = 'https://prime-koala-129289.upstash.io';
+const UPSTASH_TOKEN = 'gQAAAAAAAfkJAAIgcDEwYzFlYjVlOGY4N2Q0ODkxOWUwYjRmMDRiNmYyOGViNw';
+const COUNTER_KEY   = 'unilever-hits';
+
+const upstashHeaders = { Authorization: `Bearer ${UPSTASH_TOKEN}` };
+
+async function loadCount() {
+  try {
+    const r = await fetch(`${UPSTASH_URL}/get/${COUNTER_KEY}`, { headers: upstashHeaders });
+    const d = await r.json();
+    animateCount(parseInt(d.result) || 0);
+  } catch(e) {
+    document.getElementById('counterDisplay').textContent = '—';
+  }
+}
+
+async function incrementCount() {
+  try {
+    const r = await fetch(`${UPSTASH_URL}/incr/${COUNTER_KEY}`, {
+      method: 'POST',
+      headers: upstashHeaders
+    });
+    const d = await r.json();
+    animateCount(d.result || 0);
+  } catch(e) {}
+}
+
+function animateCount(target) {
+  const el = document.getElementById('counterDisplay');
+  const start = parseInt(el.textContent.replace(/,/g,'').replace(/\./g,'')) || 0;
+  const diff  = target - start;
+  const dur   = 1000;
+  const steps = 40;
+  let i = 0;
+  const timer = setInterval(() => {
+    i++;
+    const val = Math.round(start + diff * (i / steps));
+    el.textContent = val.toLocaleString('pt-BR');
+    if (i >= steps) clearInterval(timer);
+  }, dur / steps);
+}
+
+loadCount();
+
+/* ── FOOTBALL WIDGET ── */
+let isAnimating = false;
+
+function kickBall() {
+  if (isAnimating) return;
+  isAnimating = true;
+
+  incrementCount();
+
+  const ball        = document.getElementById('ball');
+  const target      = document.getElementById('target');
+  const impact      = document.getElementById('impact');
+  const instruction = document.getElementById('instruction');
+  const arrow       = document.getElementById('arrow');
+  const area        = document.getElementById('game-field');
+
+  ball.style.animation = 'none';
+  ball.style.cursor    = 'default';
+  instruction.classList.add('fade-out');
+  arrow.classList.add('fade-out');
+
+  const ballRect   = ball.getBoundingClientRect();
+  const targetRect = target.getBoundingClientRect();
+
+  const dx = (targetRect.left + targetRect.width / 2)  - (ballRect.left + ballRect.width / 2);
+  const dy = (targetRect.top  + targetRect.height / 2) - (ballRect.top  + ballRect.height / 2);
+
+  const anim = ball.animate([
+    { transform: 'translate(0,0) scale(1) rotate(0deg)',                                  offset: 0   },
+    { transform: `translate(${dx*.45}px,${dy*.45-80}px) scale(0.65) rotate(380deg)`,     offset: 0.5 },
+    { transform: `translate(${dx}px,${dy}px)             scale(0.28) rotate(720deg)`,     offset: 1   },
+  ], { duration: 750, easing: 'ease-in', fill: 'forwards' });
+
+  anim.onfinish = () => {
+    const tr    = target.getBoundingClientRect();
+    const ar    = area.getBoundingClientRect();
+    const cx    = tr.left + tr.width  / 2 - ar.left;
+    const cy    = tr.top  + tr.height / 2 - ar.top;
+    impact.style.left = (cx - 60) + 'px';
+    impact.style.top  = (cy - 60) + 'px';
+    impact.classList.add('show');
+
+    target.animate([
+      { transform: 'translate(0,0) rotate(0deg) scale(1)',             opacity: 1, offset: 0    },
+      { transform: 'translate(60px,-40px) rotate(180deg) scale(1.1)',  opacity: 1, offset: 0.15 },
+      { transform: 'translate(220px,-280px) rotate(540deg) scale(0.6)',opacity: 0.4, offset: 0.7  },
+      { transform: 'translate(350px,-420px) rotate(900deg) scale(0.2)',opacity: 0,   offset: 1    },
+    ], { duration: 1000, easing: 'ease-in', fill: 'forwards', delay: 80 });
+  };
+
+  setTimeout(() => {
+    impact.classList.remove('show');
+    ball.getAnimations().forEach(a => a.cancel());
+    target.getAnimations().forEach(a => a.cancel());
+    ball.style.animation = '';
+    ball.style.cursor    = 'pointer';
+    target.style.opacity = '1';
+    instruction.classList.remove('fade-out');
+    arrow.classList.remove('fade-out');
+    isAnimating = false;
+  }, 750 + 3000);
+}
+
+/* ── NEWSLETTER ── */
+async function handleSubscribe(e) {
+  e.preventDefault();
+  const email = document.getElementById('emailInput').value;
+  const msg   = document.getElementById('nl-msg');
+  const btn   = document.querySelector('.nl-btn');
+  btn.disabled = true;
+  btn.textContent = 'Enviando…';
+  try {
+    const r = await fetch('https://formspree.io/f/xjgdnrzj', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({ email })
+    });
+    if (r.ok) {
+      msg.textContent = '✓ Você está inscrito/a! Obrigado por se juntar.';
+      msg.style.color = '#22a36a';
+      document.getElementById('emailInput').value = '';
+      btn.textContent = 'Pronto!';
+    } else {
+      msg.textContent = 'Algo deu errado. Por favor tente novamente.';
+      msg.style.color = '#e53e3e';
+      btn.disabled = false;
+      btn.textContent = 'Inscrever-se';
+    }
+  } catch(err) {
+    msg.textContent = 'Algo deu errado. Por favor tente novamente.';
+    msg.style.color = '#e53e3e';
+    btn.disabled = false;
+    btn.textContent = 'Inscrever-se';
+  }
+}
+</script>
+
+<!-- ─── BOTPRESS ─── -->
+<script src="https://cdn.botpress.cloud/webchat/v3.6/inject.js"></script>
+<script src="https://files.bpcontent.cloud/2026/05/07/16/20260507163104-W3D57HJM.js"></script>
+<script>
+  window.addEventListener('load', function() {
+    setTimeout(function() {
+      var bubble = document.getElementById('proactive-bubble');
+      if (bubble) bubble.style.display = 'flex';
+    }, 3000);
+  });
+
+  function openBot() {
+    document.getElementById('proactive-bubble').style.display = 'none';
+    if (window.botpress && window.botpress.open) window.botpress.open();
+  }
+
+  function dismissBubble() {
+    document.getElementById('proactive-bubble').style.display = 'none';
+  }
+</script>
+</body>
+</html>
