@@ -867,9 +867,29 @@ async function handleSubscribe(e) {
 
 <!-- ─── BOTPRESS ─── -->
 <script src="https://cdn.botpress.cloud/webchat/v3.6/inject.js"></script>
-<script src="https://files.bpcontent.cloud/2026/05/07/16/20260507163104-W3D57HJM.js"></script>
 <script>
   window.addEventListener('load', function() {
+    window.botpress.init({
+      "botId": "d674ae4f-2f41-4cf7-a3f3-081a15cfc313",
+      "clientId": "a33a0e14-8e69-49b8-ac78-29e7513667bb",
+      "configuration": {
+        "version": "v2",
+        "color": "#3276EA",
+        "variant": "solid",
+        "headerVariant": "solid",
+        "themeMode": "light",
+        "fontFamily": "inter",
+        "radius": 4,
+        "feedbackEnabled": false,
+        "soundEnabled": false,
+        "proactiveMessageEnabled": false,
+        "conversationHistory": false,
+        "homePageEnabled": false,
+        "mainCardEnabled": false,
+        "conversationStartersEnabled": false
+      }
+    });
+
     setTimeout(function() {
       var bubble = document.getElementById('proactive-bubble');
       if (bubble) bubble.style.display = 'flex';
